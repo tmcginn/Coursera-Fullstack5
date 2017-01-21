@@ -11,9 +11,11 @@ function LunchCheckController($scope) {
   $scope.lunchDishes = "";
   $scope.message = "";
   $scope.buttonLabel = "Check If Too Much";
+  $scope.textColor = "red";
 
   $scope.checkDishes = function () {
     if ($scope.lunchDishes == "") {
+      $scope.textColor = "red";
       $scope.message = "Please enter at least one dish";
     }
     else {
@@ -27,10 +29,17 @@ function LunchCheckController($scope) {
           dishCount++;
         }
       }
-      if (dishCount <= 3) {
+      console.log(dishCount);
+      if (dishCount == 0) {
+        $scope.textColor = "red";
+        $scope.message = "Please enter at least one dish";
+      }
+      else if (dishCount <= 3) {
+        $scope.textColor = "green";
         $scope.message = "Enjoy!";
       }
       else {
+        $scope.textColor = "blue";
         $scope.message = "Too much!";
       }
 

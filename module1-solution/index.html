@@ -18,15 +18,15 @@
              placeholder={{placeholder}}
              class="form-control"
              ng-model="lunchDishes">
-             Note: empty items don't count
          </div>
          <div class="form-group">
              <button class="btn btn-default"
              ng-click="checkDishes()">
              {{buttonLabel}}</button>
+             <i>Note: empty items don't count</i>
          </div>
          <div class="form-group message">
-           {{message}}
+           <span style="color:{{textColor}}"">{{message}}</span>
          </div>
    </div>
    <script src="angular.min.js"></script>
