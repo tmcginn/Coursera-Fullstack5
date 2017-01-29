@@ -45,7 +45,7 @@ function ShoppingListCheckOffService() {
   var service = this;
 
   // List of shopping items
-  var buy = ['Oreo cookies','Milk','Ice cream','Eggs'];
+  var buy = ['Oreo cookies','Milk','Ice cream','Eggs','Chips'];
   var bought = [];
   var allBought = false;
   var nothingBought = true;
