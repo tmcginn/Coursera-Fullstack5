@@ -30,7 +30,7 @@
           </tr>
         </table>
         </p>
-        <div ng-if="buyList.allBought()" class="emptyMessage">Everything is bought!</div>
+        <div ng-if="buyList.allBought.status" class="emptyMessage">Everything is bought!</div>
       </div>
 
       <!-- Already Bought List -->
@@ -40,7 +40,7 @@
           <li ng-repeat="item in boughtList.items">
             {{ item }}
         </ul>
-        <div ng-if="boughtList.nothingBought()" class="emptyMessage">Nothing bought yet.</div>
+        <div ng-if="boughtList.nothingBought.status" class="emptyMessage">Nothing bought yet.</div>
       </div>
     </div>
   </div>

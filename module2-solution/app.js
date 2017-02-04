@@ -15,9 +15,10 @@ function ToBuyController(ShoppingListCheckOffService) {
   }
 
   buyList.items = ShoppingListCheckOffService.getBuyItems();
-  buyList.allBought = function () {
-    return ShoppingListCheckOffService.getAllBought();
-  }
+  // buyList.allBought = function () {
+  //   return ShoppingListCheckOffService.getAllBought();
+  // }
+  buyList.allBought = ShoppingListCheckOffService.getAllBought();
 }
 
 AlreadyBoughtController.$inject = ['ShoppingListCheckOffService']
@@ -25,9 +26,10 @@ function AlreadyBoughtController(ShoppingListCheckOffService) {
   var boughtList = this;
 
   boughtList.items = ShoppingListCheckOffService.getBoughtItems();
-  boughtList.nothingBought = function () {
-    return ShoppingListCheckOffService.getNothingBought();
-  }
+  // boughtList.nothingBought = function () {
+  //   return ShoppingListCheckOffService.getNothingBought();
+  // }
+  boughtList.nothingBought = ShoppingListCheckOffService.getNothingBought();
 }
 
 ShoppingListShowController.$inject = ['ShoppingListService'];
@@ -47,16 +49,16 @@ function ShoppingListCheckOffService() {
   // List of shopping items
   var buy = ['Oreo cookies','Milk','Ice cream','Eggs','Chips'];
   var bought = [];
-  var allBought = false;
-  var nothingBought = true;
+  var allBought = {'status':false};
+  var nothingBought = {'status':true};
 
   service.buyItem = function (itemIndex) {
     var item = buy[itemIndex];
     bought.push(item);
-    nothingBought = false;
+    nothingBought['status'] = false;
     buy.splice(itemIndex, 1);
     if (buy.length == 0) {
-      allBought = true;
+      allBought['status'] = true;
     };
   };
 
