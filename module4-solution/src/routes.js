@@ -41,10 +41,15 @@ function RoutesConfig($stateProvider, $urlRouterProvider) {
         function ($stateParams, MenuDataService) {
         return MenuDataService.getAllCategories()
           .then(function (items) {
+            // new code
+            var menu_cat = {
+              short_name: items[$stateParams.itemId].short_name,
+              name: items[$stateParams.itemId].name
+            }
             return MenuDataService.getItemsForCategory(
-              items[$stateParams.itemId].short_name);
+              menu_cat);
           });
-      }],
+      }]
     }
   })
 
