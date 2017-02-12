@@ -19,7 +19,7 @@
       <button ng-click="list.getFound();" class="btn btn-primary">Narrow It Down For Me!</button>
     </div>
     <div id="list" >
-      <found-list list="list" title="Matched Searches"></found-list>
+      <found-list items="list" title="Matched Searches" on-remove="list.removeItem(index)"></found-list>
     </div>
   </div>
 

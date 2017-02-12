@@ -12,8 +12,9 @@
     var ddo = {
       templateUrl: 'foundList.html',
       scope: {
-        list: '<',
-        title: '@title'
+        items: '<',
+        title: '@title',
+        onRemove: '&'
       }
     };
 
@@ -47,9 +48,9 @@
   }
 
   // Menu Search service
-  MenuSearchService.$inject = ['$q', '$http', 'ApiBasePath'];
+  MenuSearchService.$inject = ['$http', 'ApiBasePath'];
 
-  function MenuSearchService($q, $http, ApiBasePath) {
+  function MenuSearchService($http, ApiBasePath) {
     var service = this;
 
     var foundItems = [];
@@ -58,52 +59,34 @@
     var errorMessage = "";
 
     service.getMatchedMenuItems = function(searchTerm) {
-      service.matchSearchItems(searchTerm)
-        .then(function(response) {})
-        .catch(function(error) {
-          console.log(error);
-        })
-    }
-
-    service.getMenuItems = function() {
-      var deferred = $q.defer();
-      var response = $http({
-        method: "GET",
-        url: (ApiBasePath + "/menu_items.json"),
-      });
-      deferred.resolve(response);
-      return deferred.promise;
-    };
-
-    service.matchSearchItems = function(searchTerm) {
-      // reset the foundItems array
       foundItems.length = 0;
       nothingFound = true;
       errorMessage = "";
-      var promise = service.getMenuItems();
-
-      return promise
-        .then(function(response) {
-          // Skip the for loop altogether if the searchTerm is blank
-          if (searchTerm !== "") {
-            for (var i = 0; i < response.data.menu_items.length; i++) {
-              var item = response.data.menu_items[i];
-              if (item.description.toLowerCase().indexOf(searchTerm) !== -1) {
-                var menuItem = {
-                  name: item.name,
-                  short_name: item.short_name,
-                  description: item.description
-                };
-                foundItems.push(menuItem);
-                nothingFound = false;
-              }
+      return $http({
+        method: "GET",
+        url: (ApiBasePath + "/menu_items.json"),
+      })
+      .then(function(response) {
+        // Skip the for loop altogether if the searchTerm is blank
+        if (searchTerm !== "") {
+          for (var i = 0; i < response.data.menu_items.length; i++) {
+            var item = response.data.menu_items[i];
+            if (item.description.toLowerCase().indexOf(searchTerm) !== -1) {
+              var menuItem = {
+                name: item.name,
+                short_name: item.short_name,
+                description: item.description
+              };
+              foundItems.push(menuItem);
+              nothingFound = false;
             }
           }
-          if (foundItems.length == 0) {
-            errorMessage = "Nothing Found!";
-          }
-          return foundItems;
-        })
+        }
+        if (foundItems.length == 0) {
+          errorMessage = "Nothing Found!";
+        }
+        return foundItems;
+      })
     };
 
     service.getFoundItems = function() {
