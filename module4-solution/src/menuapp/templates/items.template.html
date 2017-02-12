@@ -1,5 +1,5 @@
 <ul>
   <li ng-repeat="item in $ctrl.items">
-    {{ item.name }} : {{ item.description}}
+    {{ item.name }} <span ng-if="item.description"> : {{ item.description }}</span>
   </li>
 </ul>
