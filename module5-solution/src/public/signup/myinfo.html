@@ -1,0 +1,15 @@
+<div class="container">
+  <h1 ng-if="!info.userpref">Not signed up yet. <a ui-sref="public.signup">Sign up now!</a></h1>
+  <div ng-if="info.userpref">
+    <h1>Your Data:</h1>
+  <table>
+    <tr><td>First Name</td><td>{{ info.userpref.firstname }}</td></tr>
+    <tr><td>Last Name</td><td>{{ info.userpref.lastname }}</td></tr>
+    <tr><td>E-Mail</td><td>{{ info.userpref.email }}</td></tr>
+    <tr><td>Phone</td><td>{{ info.userpref.phone }}</td></tr>
+    <tr><td>Favorite Menu Category</td><td>{{ info.userpref.short_name }}</td></tr>
+
+  </table>
+</div>
+
+</div>

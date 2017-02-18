@@ -1,0 +1,74 @@
+<div class="container">
+<fieldset>
+  <legend>Sign up for our Newsletter!</legend>
+  <form name='regForm' novalidate>
+    <input type="text" name="firstname" placeholder="*First Name"
+    required
+    ng-model="reg.user.firstname"
+    ng-minlength="2"
+    ng-maxlength="15">
+    <span ng-if="(regForm.firstname.$error.minlength || regForm.firstname.$error.required)
+                  && regForm.firstname.$touched">
+    First name must be at least 2 characters
+    </span>
+    <span ng-if="regForm.firstname.$error.maxlength
+                && regForm.firstname.$touched">
+      First name must be less than 15 characters
+    </span>
+    <br>
+
+    <input type="text" name="lastname" placeholder="Last Name"
+    ng-model="reg.user.lastname"
+    ng-maxlength="20">
+    <span ng-if="regForm.firstname.$error.maxlength
+                && regForm.firstname.$touched">
+      Last name must be less than 20 characters
+    </span>
+    <br>
+
+    <input type="email" name="email" placeholder="*E-mail address"
+    ng-model="reg.user.email"
+    required>
+    <span ng-if="regForm.email.$invalid && regForm.email.$touched">
+      Must be a valid email address: handle@domain format
+    </span>
+    <br>
+
+    <input type="text" name="phone" placeholder="Phone ###-###-####"
+    ng-model="reg.user.phone"
+    pattern="(\d{3})-(\d{3})-(\d{4})">
+    <span ng-if="regForm.phone.$invalid && regForm.phone.$touched">
+      Phone must be in the format ###-###-####.
+    </span>
+    <br>
+
+    <input type="text" name="short_name" placeholder="*Menu category short name"
+    ng-blur="reg.checkCategoryName()"
+    ng-model="reg.user.short_name"
+    required
+    ng-minlength="1"
+    ng-maxlength="2">
+    <span ng-if="(regForm.short_name.$error.maxlength || regForm.short_name.$error.minlength || regForm.short_name.$error.required)
+    && regForm.short_name.$touched">
+      Menu category short name must be between 1 and 2 characters
+    </span>
+    <span ng-if="reg.invalidCategory">
+      Not a valid category
+    </span>
+    <span ng-if="reg.user.short_name && reg.checked && !reg.invalidCategory">
+      This is a valid category
+    </span>
+    <br>
+
+    <!-- <button
+      ng-disabled="regForm.$invalid"
+      ng-click="reg.checkCategoryName()">Check Category</button> -->
+
+    <button
+      ng-disabled="regForm.$invalid || reg.invalidCategory || !reg.checked"
+      ng-click="reg.submit()">Submit</button>
+      <span ng-if="reg.saved">Your information has been saved.</span>
+
+  </form>
+</fieldset>
+</div>
