@@ -1,13 +1,13 @@
 <div class="container">
 <fieldset>
   <legend>Sign up for our Newsletter!</legend>
+  <p>Fields marked with * are required</p>
   <form name='regForm' novalidate>
-    <input type="text" name="firstname" placeholder="*First Name"
-    required
+    <input type="text" name="firstname" placeholder="First Name"
     ng-model="reg.user.firstname"
     ng-minlength="2"
     ng-maxlength="15">
-    <span ng-if="(regForm.firstname.$error.minlength || regForm.firstname.$error.required)
+    <span ng-if="regForm.firstname.$error.minlength
                   && regForm.firstname.$touched">
     First name must be at least 2 characters
     </span>
@@ -20,8 +20,8 @@
     <input type="text" name="lastname" placeholder="Last Name"
     ng-model="reg.user.lastname"
     ng-maxlength="20">
-    <span ng-if="regForm.firstname.$error.maxlength
-                && regForm.firstname.$touched">
+    <span ng-if="regForm.lastname.$error.maxlength
+                && regForm.lastname.$touched">
       Last name must be less than 20 characters
     </span>
     <br>
@@ -42,27 +42,23 @@
     </span>
     <br>
 
-    <input type="text" name="short_name" placeholder="*Menu category short name"
+    <input type="text" name="short_name" placeholder="*Favorite Menu Item"
     ng-blur="reg.checkCategoryName()"
     ng-model="reg.user.short_name"
     required
-    ng-minlength="1"
-    ng-maxlength="2">
+    ng-minlength="2"
+    ng-maxlength="4">
     <span ng-if="(regForm.short_name.$error.maxlength || regForm.short_name.$error.minlength || regForm.short_name.$error.required)
     && regForm.short_name.$touched">
-      Menu category short name must be between 1 and 2 characters
+      Favorite Menu item must be between 2 and 4 characters, for example "A1"
     </span>
     <span ng-if="reg.invalidCategory">
-      Not a valid category
+      Not a valid menu item
     </span>
     <span ng-if="reg.user.short_name && reg.checked && !reg.invalidCategory">
-      This is a valid category
+      This is a valid menu item
     </span>
     <br>
-
-    <!-- <button
-      ng-disabled="regForm.$invalid"
-      ng-click="reg.checkCategoryName()">Check Category</button> -->
 
     <button
       ng-disabled="regForm.$invalid || reg.invalidCategory || !reg.checked"

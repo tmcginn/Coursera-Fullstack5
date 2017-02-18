@@ -1,49 +1,43 @@
-(function () {
-"use strict";
+(function() {
+  "use strict";
 
-angular.module('public')
-.controller('RegistrationController', RegistrationController);
+  angular.module('public')
+    .controller('SignupController', SignupController);
 
-RegistrationController.$inject = ['MenuService', 'SignupService']
-function RegistrationController(MenuService, SignupService) {
-  var reg = this;
+  SignupController.$inject = ['MenuService', 'SignupService']
 
-  reg.invalidCategory = false;
-  reg.checked = false;
-  reg.saved = false;
+  function SignupController(MenuService, SignupService) {
+    var reg = this;
 
-  reg.checkCategoryName = function () {
     reg.invalidCategory = false;
-    console.log("data: " + reg.user.short_name);
-    var items = MenuService.getMenuItems(reg.user.short_name)
-    .then (function(items) {
-      if (items.menu_items.length > 0) {
-        console.log("good: " + items.menu_items);
-        reg.checked = true;
-      } else {
-        console.log("no good");
-        reg.invalidCategory = true;
+    reg.checked = false;
+    reg.saved = false;
+
+    // Get the current values (if any)
+    reg.user = SignupService.getPreference();
+
+    reg.checkCategoryName = function() {
+      reg.invalidCategory = false;
+      // Skip the function if still undefined (new)
+      if (reg.user) {
+        // uppercase the string
+        reg.user.short_name = reg.user.short_name.toUpperCase();
+        var items = MenuService.getMenuItem(reg.user.short_name)
+          .then(function(item) {
+            if (item.short_name) {
+              reg.checked = true;
+              reg.user.item = item;
+            } else {
+              reg.invalidCategory = true;
+            }
+          })
       }
-    })
-  };
+    };
 
-  reg.submit = function () {
-    // should not happen
-    if (reg.invalidCategory) {
-      return false;
+    reg.submit = function() {
+      SignupService.savePreference(reg.user);
+      reg.saved = true;
     }
-    // Create an object to save as a preference
-    // var preferences = {};
-    // preferences.firstname = reg.user.firstname;
-    // preferences.lastname = reg.user.lastname;
-    // preferences.email = reg.user.email;
-    // preferences.phone = reg.user.phone;
-    // preferences.short_name = reg.user.short_name;
-
-    console.log("submitted: " + reg.user.email);
-    SignupService.savePreference(reg.user);
-    reg.saved = true;
   }
-}
 
 })();

@@ -7,8 +7,6 @@ angular.module('common')
 function SignupService() {
   var service = this;
 
-  // service.prefsaved = false;
-
   service.savePreference = function(preference) {
     service.preference = preference;
   }
